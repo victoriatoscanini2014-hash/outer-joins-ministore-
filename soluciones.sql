@@ -57,42 +57,93 @@ ORDER BY
     v.venta_id;
 
 -- ==========================================
--- RetailChain — Inventario por Sucursal
+-- RetailChain — UNION y UNION ALL
+-- Autor: Victoria Toscanini
 -- ==========================================
 
-DROP TABLE IF EXISTS inventario_sucursal_norte;
-DROP TABLE IF EXISTS inventario_sucursal_sur;
+-- ==========================================
+-- CONSULTA 1: UNION
+-- Catálogo unificado
+-- ==========================================
 
-CREATE TABLE inventario_sucursal_norte (
-    id_producto     INT,
-    nombre_producto VARCHAR(100) NOT NULL,
-    categoria       VARCHAR(50),
-    stock           INT NOT NULL
-);
+SELECT
+    id_producto,
+    nombre_producto,
+    categoria,
+    stock
+FROM inventario_sucursal_norte
 
-CREATE TABLE inventario_sucursal_sur (
-    id_producto     INT,
-    nombre_producto VARCHAR(100) NOT NULL,
-    categoria       VARCHAR(50),
-    stock           INT NOT NULL
-);
+UNION
 
--- Sucursal Norte
-INSERT INTO inventario_sucursal_norte VALUES
-(101, 'Laptop Pro 15', 'Computación', 8),
-(102, 'Mouse Inalámbrico', 'Accesorios', 30),
-(103, 'Monitor 4K 27"', 'Computación', 5),
-(104, 'Teclado Mecánico', 'Accesorios', 20),
-(105, 'Auriculares BT Pro', 'Audio', 15),
-(106, 'SSD Externo 1TB', 'Almacenamiento', 10),
-(107, 'Webcam HD 1080p', 'Accesorios', 12);
+SELECT
+    id_producto,
+    nombre_producto,
+    categoria,
+    stock
+FROM inventario_sucursal_sur;
 
--- Sucursal Sur
-INSERT INTO inventario_sucursal_sur VALUES
-(103, 'Monitor 4K 27"', 'Computación', 3),
-(104, 'Teclado Mecánico', 'Accesorios', 18),
-(106, 'SSD Externo 1TB', 'Almacenamiento', 7),
-(108, 'Laptop Basic 14', 'Computación', 6),
-(109, 'Parlante Bluetooth', 'Audio', 22),
-(110, 'Hub USB-C 7p', 'Accesorios', 35),
-(111, 'Webcam HD 1080p', 'Accesorios', 9);
+
+-- ==========================================
+-- CONSULTA 2: UNION ALL
+-- Auditoría de stock total
+-- ==========================================
+
+SELECT
+    id_producto,
+    nombre_producto,
+    categoria,
+    stock
+FROM inventario_sucursal_norte
+
+UNION ALL
+
+SELECT
+    id_producto,
+    nombre_producto,
+    categoria,
+    stock
+FROM inventario_sucursal_sur;
+
+
+-- ==========================================
+-- CONSULTA 3: COMPARACIÓN
+-- ==========================================
+
+SELECT COUNT(*) AS filas_union
+FROM (
+    SELECT
+        id_producto,
+        nombre_producto,
+        categoria,
+        stock
+    FROM inventario_sucursal_norte
+
+    UNION
+
+    SELECT
+        id_producto,
+        nombre_producto,
+        categoria,
+        stock
+    FROM inventario_sucursal_sur
+) AS resultado_union;
+
+
+SELECT COUNT(*) AS filas_union_all
+FROM (
+    SELECT
+        id_producto,
+        nombre_producto,
+        categoria,
+        stock
+    FROM inventario_sucursal_norte
+
+    UNION ALL
+
+    SELECT
+        id_producto,
+        nombre_producto,
+        categoria,
+        stock
+    FROM inventario_sucursal_sur
+) AS resultado_union_all;
