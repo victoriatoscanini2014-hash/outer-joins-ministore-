@@ -42,3 +42,44 @@ INSERT INTO ventas VALUES
 (8, 102, 203, 8, '2024-03-12'),
 (9, 107, 204, 2, '2024-03-20'),
 (10, 999, 205, 1, '2024-03-25');
+
+-- ==========================================
+-- RetailChain — Inventario por Sucursal
+-- ==========================================
+
+DROP TABLE IF EXISTS inventario_sucursal_norte;
+DROP TABLE IF EXISTS inventario_sucursal_sur;
+
+CREATE TABLE inventario_sucursal_norte (
+    id_producto     INT,
+    nombre_producto VARCHAR(100) NOT NULL,
+    categoria       VARCHAR(50),
+    stock           INT NOT NULL
+);
+
+CREATE TABLE inventario_sucursal_sur (
+    id_producto     INT,
+    nombre_producto VARCHAR(100) NOT NULL,
+    categoria       VARCHAR(50),
+    stock           INT NOT NULL
+);
+
+-- Sucursal Norte
+INSERT INTO inventario_sucursal_norte VALUES
+(101, 'Laptop Pro 15', 'Computación', 8),
+(102, 'Mouse Inalámbrico', 'Accesorios', 30),
+(103, 'Monitor 4K 27"', 'Computación', 5),
+(104, 'Teclado Mecánico', 'Accesorios', 20),
+(105, 'Auriculares BT Pro', 'Audio', 15),
+(106, 'SSD Externo 1TB', 'Almacenamiento', 10),
+(107, 'Webcam HD 1080p', 'Accesorios', 12);
+
+-- Sucursal Sur
+INSERT INTO inventario_sucursal_sur VALUES
+(103, 'Monitor 4K 27"', 'Computación', 3),
+(104, 'Teclado Mecánico', 'Accesorios', 18),
+(106, 'SSD Externo 1TB', 'Almacenamiento', 7),
+(108, 'Laptop Basic 14', 'Computación', 6),
+(109, 'Parlante Bluetooth', 'Audio', 22),
+(110, 'Hub USB-C 7p', 'Accesorios', 35),
+(111, 'Webcam HD 1080p', 'Accesorios', 9);
